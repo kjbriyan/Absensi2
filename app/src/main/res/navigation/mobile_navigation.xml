@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.absensi.ui.absen.HomeFragment"
+        android:label="Absen"
+        tools:layout="@layout/fragment_absen" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.absensi.ui.rabsensi.GalleryFragment"
+        android:label="Resume Absensi"
+        tools:layout="@layout/fragment_rabsensi" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.absensi.ui.rpenjualan.SlideshowFragment"
+        android:label="Resume Penjualan"
+        tools:layout="@layout/fragment_rpenjualan" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="com.example.absensi.ui.performansi.ToolsFragment"
+        android:label="Performansi(KPI)"
+        tools:layout="@layout/fragment_performansi" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.example.absensi.ui.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="com.example.absensi.ui.send.SendFragment"
+        android:label="@string/menu_send"
+        tools:layout="@layout/fragment_send" />
+</navigation>
