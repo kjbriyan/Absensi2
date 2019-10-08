@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity {
                 no = us.getText().toString();
                 Log.d(TAG, "onClick:"+imei);
                 Log.d(TAG, "onClick: "+no);
-              
+
                     checkLogin();
 
             }
@@ -112,7 +112,7 @@ public class Login extends AppCompatActivity {
                     loading.dismiss();
 
                 }else {
-                    Toast.makeText(Login.this, "Gagal Login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Gagal Login Mungkin Nomor hp salah atau hp anda tidak sesuai user yang anda gunakan", Toast.LENGTH_SHORT).show();
                    loading.dismiss();
                 }
             }
