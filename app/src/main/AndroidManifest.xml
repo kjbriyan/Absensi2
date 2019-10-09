@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.INActivity"></activity>
+        <activity android:name=".LeaderActivity"></activity>
+        <activity android:name=".Activity.INActivity" />
         <activity
             android:name=".NavDrawer"
             android:label="@string/title_activity_nav_drawer"

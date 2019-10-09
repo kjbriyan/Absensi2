@@ -107,8 +107,17 @@ public class Login extends AppCompatActivity {
                     Prefs.clear();
                     setPrefference(response.body().getData());
                     Toast.makeText(Login.this, login.getMessage(), Toast.LENGTH_SHORT).show();
-                    Move.move(Login.this, NavDrawer.class);
-                    finish();
+                    if(login.getData().getIdPosition()==1){
+                        Move.move(Login.this, LeaderActivity.class);
+                        finish();
+                    }else if (login.getData().getIdPosition()==2){
+                        Move.move(Login.this, LeaderActivity.class);
+                        finish();
+                    }else{
+                        Move.move(Login.this, NavDrawer.class);
+                        finish();
+                    }
+
                     loading.dismiss();
 
                 }else {
