@@ -16,16 +16,16 @@ public class Data{
 	private String createdAt;
 
 	@SerializedName("email_verified_at")
-	private Object emailVerifiedAt;
+	private String emailVerifiedAt;
 
 	@SerializedName("id_location")
-	private Object idLocation;
+	private String idLocation;
 
 	@SerializedName("type")
 	private String type;
 
 	@SerializedName("id_leader")
-	private Object idLeader;
+	private String idLeader;
 
 	@SerializedName("updated_at")
 	private String updatedAt;
@@ -34,7 +34,7 @@ public class Data{
 	private String name;
 
 	@SerializedName("id_position")
-	private Object idPosition;
+	private String idPosition;
 
 	@SerializedName("imei")
 	private String imei;
@@ -60,11 +60,11 @@ public class Data{
 		return createdAt;
 	}
 
-	public Object getEmailVerifiedAt(){
+	public String getEmailVerifiedAt(){
 		return emailVerifiedAt;
 	}
 
-	public Object getIdLocation(){
+	public String getIdLocation(){
 		return idLocation;
 	}
 
@@ -72,7 +72,7 @@ public class Data{
 		return type;
 	}
 
-	public Object getIdLeader(){
+	public String getIdLeader(){
 		return idLeader;
 	}
 
@@ -84,7 +84,7 @@ public class Data{
 		return name;
 	}
 
-	public Object getIdPosition(){
+	public String getIdPosition(){
 		return idPosition;
 	}
 

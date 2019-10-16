@@ -52,14 +52,14 @@
                     android:text="2019"
                     android:textColor="@android:color/white" />
 
-                <TextClock
-                    android:id="@+id/jam2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="Ini jam"
-                    android:textColor="@android:color/white"
-                    tools:ignore="NewApi" />
+<!--                <TextView-->
+<!--                    android:id="@+id/jam2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:format24Hour="HH:mm:ss"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    tools:ignore="NewApi" />-->
 
 
             </LinearLayout>
@@ -67,23 +67,7 @@
     </androidx.cardview.widget.CardView>
 
 
-        <EditText
-            android:background="@android:color/white"
-            android:id="@+id/et_keterangan"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:outlineSpotShadowColor="@android:color/white"
-            android:hint="Keterangan"
-            android:lines="2"
-            android:textColor="@color/colorBlack_1000"
-            android:textColorHint="@color/colorBlack_1000"
-            app:layout_constraintBottom_toTopOf="@+id/in"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
-            app:layout_constraintVertical_bias="0.24000001"
-            tools:ignore="MissingConstraints"/>
+
 
 
     <Button

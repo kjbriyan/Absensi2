@@ -1,5 +1,6 @@
 package com.example.absensi;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.absensi.Utils.Move;
@@ -16,6 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -28,12 +31,15 @@ import android.view.Menu;
 public class NavDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    //FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+       // mAuth = FirebaseAuth.getInstance();
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,4 +92,19 @@ public class NavDrawer extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        FirebaseUser cuurentuser = mAuth.getCurrentUser();
+//        if (cuurentuser == null){
+//            sendTologin();
+//        }
+//
+//    }
+//    private void sendTologin(){
+//        Intent i= new Intent(this, Login.class);
+//        startActivity(i);
+//        finish();
+//    }
 }

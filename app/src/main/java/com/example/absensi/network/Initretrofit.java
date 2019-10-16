@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Initretrofit {
-    private static final String URL = "http://192.168.1.13/dku_pro/public/";
+    private static final String URL = "http://192.168.1.37/dku-pro/public/";
     private static final String BASE_URL_IMAGE = URL + "asset/foto_produk/";
     private static final String BASE_URL_KTP = URL + "asset/foto_ktp/";
 

@@ -60,12 +60,20 @@ public class Login extends AppCompatActivity {
                 .build();
 
 
-        if (Prefs.getString(SharedPreff.getName(), null) == null) {
+        if (Prefs.getString(SharedPreff.getIdPosition(), null) == null) {
             initUI();
             return;
+        }else if (Prefs.getString(SharedPreff.getIdPosition(),"").equals("1")){
+            Move.move(this, LeaderActivity.class);
+            finish();
+        }else if (Prefs.getString(SharedPreff.getIdPosition(),"").equals("2")){
+            Move.move(this, LeaderActivity.class);
+            finish();
+        }else{
+            Move.move(this, NavDrawer.class);
+            finish();
         }
-        Move.move(this, NavDrawer.class);
-        finish();
+
     }
     private void initUI(){
         btn = findViewById(R.id.btnmasuk);
@@ -107,10 +115,10 @@ public class Login extends AppCompatActivity {
                     Prefs.clear();
                     setPrefference(response.body().getData());
                     Toast.makeText(Login.this, login.getMessage(), Toast.LENGTH_SHORT).show();
-                    if(login.getData().getIdPosition()==1){
+                    if(login.getData().getIdPosition().equals("1")){
                         Move.move(Login.this, LeaderActivity.class);
                         finish();
-                    }else if (login.getData().getIdPosition()==2){
+                    }else if (login.getData().getIdPosition().equals("2")){
                         Move.move(Login.this, LeaderActivity.class);
                         finish();
                     }else{
@@ -138,6 +146,7 @@ public class Login extends AppCompatActivity {
         Prefs.putString(SharedPreff.getId(),data.getId());
         Prefs.putString(SharedPreff.getName(),data.getName());
         Prefs.putString(SharedPreff.getNoHp(),data.getNoHp());
+        Prefs.putString(SharedPreff.getIdPosition(),data.getIdPosition());
     }
 
 }
