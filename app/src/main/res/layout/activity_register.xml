@@ -4,19 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
-    android:background="@drawable/login">
-
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/user"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.90999997"
-        tools:ignore="MissingConstraints" />
+    android:background="@drawable/login"
+    tools:context=".Activity.RegisterActivity">
 
     <LinearLayout
 
@@ -31,18 +20,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_gravity="center"
+            android:textColorHint="@android:color/white"
             android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/et_usname"
                 android:layout_width="190dp"
                 android:layout_height="40dp"
-
                 android:background="@color/item"
                 android:hint="Nomor Handphone"
                 android:inputType="number"
@@ -54,15 +41,15 @@
 
 
         <Button
-            android:id="@+id/btnmasuk"
+            android:id="@+id/btnregis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/ore"
-            android:text="Masuk"
+            android:text="REGISTRASI"
             android:textColor="@android:color/white"
             android:textSize="13sp"
-          />
+            />
 
 
     </LinearLayout>

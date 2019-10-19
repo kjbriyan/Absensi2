@@ -17,8 +17,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.absensi.Activity.RegisterActivity;
+import com.example.absensi.Leader.LeaderActivity;
 import com.example.absensi.Sharedprefs.SharedPreff;
 import com.example.absensi.Utils.Move;
 import com.example.absensi.model.Login.Data;
@@ -34,6 +37,7 @@ public class Login extends AppCompatActivity {
     EditText us, pass;
     Button btn;
     String no,imei;
+
     ResponseLogin login;
     public static final String TAG = "Login";
 
@@ -49,6 +53,8 @@ public class Login extends AppCompatActivity {
     }
 
     private void startinit() {
+
+
 
 
 
