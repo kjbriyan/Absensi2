@@ -3,11 +3,15 @@ package com.example.absensi.network;
 import com.example.absensi.model.Login.ResponseLogin;
 import com.example.absensi.model.checkin.ResponseCheckin;
 import com.example.absensi.model.checkout.Responseout;
+import com.example.absensi.model.dataUser.ResponseDataUser;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface Apiinterface {
 
@@ -16,6 +20,11 @@ public interface Apiinterface {
     Call<ResponseLogin> getUser(@Field("no_hp") String username,
                                 @Field("imei") String password
                                 );
+
+
+    @GET("api/getuser/{id}")
+    Call<ResponseDataUser> getDataUser(@Path("id") String iduser
+    );
 
     @FormUrlEncoded
     @POST("api/checkin")

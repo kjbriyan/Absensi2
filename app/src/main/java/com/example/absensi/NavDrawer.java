@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.absensi.Sharedprefs.SharedPreff;
 import com.example.absensi.Utils.Move;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -40,6 +42,7 @@ public class NavDrawer extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     LocationManager locationManager;
     String latitude, longitude;
+    TextView name,jabatan;
     private static final int REQUEST_LOCATION = 1;
     //FirebaseAuth mAuth;
 
@@ -48,6 +51,7 @@ public class NavDrawer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
 
 
         // mAuth = FirebaseAuth.getInstance();
@@ -104,6 +108,7 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+
     }
 
 

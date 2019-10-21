@@ -31,12 +31,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.absensi.R;
 import com.example.absensi.Sharedprefs.SharedPreff;
+import com.example.absensi.model.Login.Data;
 import com.example.absensi.model.checkin.ResponseCheckin;
 import com.example.absensi.model.checkout.Responseout;
+import com.example.absensi.model.dataUser.DataItem;
+import com.example.absensi.model.dataUser.ResponseDataUser;
 import com.example.absensi.network.Initretrofit;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,6 +58,15 @@ public class HomeFragment extends Fragment implements LocationListener {
     String latitude, longitude;
     String ceklat, ceklong;
     String ct, cl, clo, ck, cid, cuse;
+
+    String alat ;
+    String blong ;
+    String alat2 ;
+    String blong2;
+    String alata ;
+    String blonga ;
+    String alat2a ;
+    String blong2a ;
 
     TextView tgl, name;
     String formattedDate;
@@ -78,6 +91,8 @@ public class HomeFragment extends Fragment implements LocationListener {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_absen, container, false);
 
+        cuse = Prefs.getString(SharedPreff.getId(), "");
+        dataUser();
         cekgps();
 //        getLocatio();
         Date c = Calendar.getInstance().getTime();
@@ -164,24 +179,50 @@ public class HomeFragment extends Fragment implements LocationListener {
 
     private void dataUser(){
 
+        Call<ResponseDataUser> call = Initretrofit.getInstance().getDataUser(cuse);
+        call.enqueue(new Callback<ResponseDataUser>() {
+            @Override
+            public void onResponse(Call<ResponseDataUser> call, Response<ResponseDataUser> response) {
+                ResponseDataUser res = response.body();
+                if (response.isSuccessful() && res.getData() != null){
+                     alat= res.getData().get(0).getLatitude();
+                     blong=res.getData().get(0).getLongitude();
+                    Log.d(TAG, "onResponsedatauser: "+alat+"----"+blong);
+                }else {
+                    Toast.makeText(getActivity(), "fail get data", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDataUser> call, Throwable t) {
+                Toast.makeText(getActivity(), ""+t.getCause()+" "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void ceklokasi() {
-//        getLocatio();
         cekgps();
-        String alat = "-8,216";
-        String blong = "114,369";
-        String alat2 = "-8,215";
-        String blong2 = "114,368";
-        String alata = "-8.216";
-        String blonga = "114.369";
-        String alat2a = "-8.215";
-        String blong2a = "114.368";
+        DecimalFormat df = new DecimalFormat("#.###");
+        String ss = ceklat.replace(",",".");
+        String bb = ceklong.replace(",",".");
+        double a = Double.parseDouble(alat);
+        double b = Double.parseDouble(blong);
+        double var= 0.001;
+        double alatmin =a+var;
+        double blongmin=b-var;
+        double alatplus=var-a;
+        double blongplus=b+var;
+        String y = df.format(alatplus);
+        String f = y.replace(",",".");
+        Log.d(TAG, "pengurangan: "+a+"++"+var+"---"+alatmin+"ewww"+b+"wew"+blongmin);
+        Log.d(TAG, "penambahan: "+f+"   "+blongplus);
+
+
         ct = tgl.getText().toString();
         cl = ceklat;
         clo = ceklong;
 
-        cuse = Prefs.getString(SharedPreff.getId(), "");
+
 
 
         Log.d(TAG, "ceklokasi: " + ct + cl + clo + ck + cuse);
@@ -192,55 +233,74 @@ public class HomeFragment extends Fragment implements LocationListener {
             cid = "3";
         } else {
             cid = "1";
-            //Toast.makeText(getActivity(), "jelek", Toast.LENGTH_SHORT).show();
+
         }
 
         if (ceklong != null && ceklat != null) {
-            if (ceklat.equals(alat) && ceklong.equals(blong)||ceklat.equals(alata) && ceklong.equals(blonga)) {
+            if (ss.equals(alat) && bb.equals(blong)) {
                 post();
-//                Toast.makeText(getActivity(), "longlat biasa" + ceklat + " " + ceklong+""+cid+""+cuse+""+cl+ck+ct, Toast.LENGTH_SHORT).show();
-            } else if (ceklat.equals(alat) && ceklong.equals(blong2)||ceklat.equals(alata) && ceklong.equals(blong2a)) {
+            }else if (ss.equals(alat)&&bb.equals(blongmin)){
                 post();
-                //   Toast.makeText(getActivity(), "ini masih bisa"+ ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
-            } else if (ceklat.equals(alat2) && ceklong.equals(blong)||ceklat.equals(alat2a) && ceklong.equals(blonga)) {
+                Log.d(TAG, "ceklokasi: long di min");
+            }else if (ss.equals(alat)&&bb.equals(blongplus)){
                 post();
-                //  Toast.makeText(getActivity(), "ini juga bisa"+ ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
-            } else if (alat2.equals(alat2) && ceklong.equals(blong2)||alat2.equals(alat2a) && ceklong.equals(blong2a)) {
+                Log.d(TAG, "ceklokasi: ini long di plus");
+            }else if (ss.equals(alatmin)&&bb.equals(blong)){
                 post();
-                // Toast.makeText(getActivity(), "ini juga masih bisa"+ ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
-            } else {
+                Log.d(TAG, "ceklokasi: alatmin blong");
+            }else if (ss.equals(alatmin)&&bb.equals(blongmin)){
+                post();
+                Log.d(TAG, "ceklokasi: alatmin blong min");
+            }else if (ss.equals(alatmin)&&bb.equals(blongplus)){
+                post();
+                Log.d(TAG, "ceklokasi: alatmin blong plus");
+            }else if (ss.equals(alatplus)&&bb.equals(blong)){
+                post();
+                Log.d(TAG, "ceklokasi: alat plus blong");
+            }else if (ss.equals(alatplus)&&bb.equals(blongmin)){
+                post();
+                Log.d(TAG, "ceklokasi: alatplus blong min");
+            }else if (ss.equals(alatplus)&&bb.equals(blongplus)){
+                post();
+                Log.d(TAG, "ceklokasi: alatplus blong plus");
+            }else {
                 cid = "4";
                 //post();
                 DialogForm();
 
-                Toast.makeText(getActivity(), "Anda tidak dalam jangkauan" + ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Anda tidak dalam jangkauan" + ceklat+"--"+alat + " " + ceklong+"--"+blong, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "ceklokasi: "+ ceklat+"--"+alat + " " + ceklong+"--"+blong);
                 //sendOnChanel();
             }
         } else {
-//            getLocatio();
             getLocation();
             Toast.makeText(getActivity(), "Your Location Unknow Open your map and Restart the app", Toast.LENGTH_LONG).show();
-
-
         }
     }
 
     private void ceklokasiout() {
-//        getLocatio();
         cekgps();
-        String alat = "-8,216";
-        String blong = "114,369";
-        String alat2 = "-8,215";
-        String blong2 = "114,368";
-        String alata = "-8.216";
-        String blonga = "114.369";
-        String alat2a = "-8.215";
-        String blong2a = "114.368";
+        DecimalFormat df = new DecimalFormat("#.###");
+        String ss = ceklat.replace(",",".");
+        String bb = ceklong.replace(",",".");
+        double a = Double.parseDouble(alat);
+        double b = Double.parseDouble(blong);
+        double var= 0.001;
+        double alatmin =a+var;
+        double blongmin=b-var;
+        double alatplus=var-a;
+        double blongplus=b+var;
+        String y = df.format(alatplus);
+        String f = y.replace(",",".");
+        Log.d(TAG, "pengurangan: "+a+"++"+var+"---"+alatmin+"ewww"+b+"wew"+blongmin);
+        Log.d(TAG, "penambahan: "+f+"   "+blongplus);
+
+
         ct = tgl.getText().toString();
         cl = ceklat;
         clo = ceklong;
 
-        cuse = Prefs.getString(SharedPreff.getId(), "");
+
 
 
         Log.d(TAG, "ceklokasi: " + ct + cl + clo + ck + cuse);
@@ -251,34 +311,55 @@ public class HomeFragment extends Fragment implements LocationListener {
             cid = "3";
         } else {
             cid = "1";
-            //Toast.makeText(getActivity(), "jelek", Toast.LENGTH_SHORT).show();
+
         }
 
         if (ceklong != null && ceklat != null) {
-            if (ceklat.equals(alat) && ceklong.equals(blong)||ceklat.equals(alata) && ceklong.equals(blonga)) {
+            if (ss.equals(alat) && bb.equals(blong)) {
                 postout();
-//                Toast.makeText(getActivity(), "longlat biasa" + ceklat + " " + ceklong+""+cid+""+cuse+""+cl+ck+ct, Toast.LENGTH_SHORT).show();
-            } else if (ceklat.equals(alat) && ceklong.equals(blong2)||ceklat.equals(alata) && ceklong.equals(blong2a)) {
+                Toast.makeText(getActivity(), ss+"||"+alat+"||"+bb+"||"+blong, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alat)&&bb.equals(blongmin)){
                 postout();
-                //   Toast.makeText(getActivity(), "ini masih bisa"+ ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
-            } else if (ceklat.equals(alat2) && ceklong.equals(blong)||ceklat.equals(alat2a) && ceklong.equals(blonga)) {
+                Log.d(TAG, "ceklokasi: long di min");
+                Toast.makeText(getActivity(), ss+"||"+alat+"||"+bb+"||"+blongmin, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alat)&&bb.equals(blongplus)){
                 postout();
-                //  Toast.makeText(getActivity(), "ini juga bisa"+ ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
-            } else if (alat2.equals(alat2) && ceklong.equals(blong2)||alat2.equals(alat2a) && ceklong.equals(blong2a)) {
+                Log.d(TAG, "ceklokasi: ini long di plus");
+                Toast.makeText(getActivity(), ss+"||"+alat+"||"+bb+"||"+blongplus, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alatmin)&&bb.equals(blong)){
                 postout();
-                // Toast.makeText(getActivity(), "ini juga masih bisa"+ ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
-            } else {
+                Log.d(TAG, "ceklokasi: alatmin blong");
+                Toast.makeText(getActivity(), ss+"||"+alatmin+"||"+bb+"||"+blong, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alatmin)&&bb.equals(blongmin)){
+                postout();
+                Log.d(TAG, "ceklokasi: alatmin blong min");
+                Toast.makeText(getActivity(), ss+"||"+alatmin+"||"+bb+"||"+blongmin, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alatmin)&&bb.equals(blongplus)){
+                postout();
+                Log.d(TAG, "ceklokasi: alatmin blong plus");
+                Toast.makeText(getActivity(), ss+"||"+alatmin+"||"+bb+"||"+blongplus, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alatplus)&&bb.equals(blong)){
+                postout();
+                Log.d(TAG, "ceklokasi: alat plus blong");
+                Toast.makeText(getActivity(), ss+"||"+alatplus+"||"+bb+"||"+blong, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alatplus)&&bb.equals(blongmin)){
+                postout();
+                Log.d(TAG, "ceklokasi: alatplus blong min");
+                Toast.makeText(getActivity(), ss+"||"+alatplus+"||"+bb+"||"+blongmin, Toast.LENGTH_SHORT).show();
+            }else if (ss.equals(alatplus)&&bb.equals(blongplus)){
+                postout();
+                Log.d(TAG, "ceklokasi: alatplus blong plus");
+                Toast.makeText(getActivity(), ss+"||"+alatplus+"||"+bb+"||"+blongplus, Toast.LENGTH_SHORT).show();
+            }else {
                 cid = "4";
                 DialogFormout();
-                //post();
-
-                Toast.makeText(getActivity(), "Anda tidak dalam jangkauan" + ceklat + " " + ceklong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Anda tidak dalam jangkauan" + ss+"--"+ " " + bb+"--", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "ceklokasi: "+ceklat+"--"+ceklong+"--");
                 //sendOnChanel();
             }
         } else {
-            getLocatio();
+            getLocation();
             Toast.makeText(getActivity(), "Your Location Unknow Open your map and Restart the app", Toast.LENGTH_LONG).show();
-
         }
     }
 
@@ -364,7 +445,7 @@ public class HomeFragment extends Fragment implements LocationListener {
 
     private void postout() {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading...", "Please wait...", false, false);
-        Log.d(TAG, "post: " + ct + " " + cid + " " + cuse);
+        Log.d(TAG, "post: " + ct + "--" + cid + "--" + cuse);
         Call<Responseout> call = Initretrofit.getInstance().Checkout(ct, cl, clo, cid, ck, cuse);
         call.enqueue(new Callback<Responseout>() {
             @Override
@@ -431,8 +512,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                 double lat = LocationGps.getLatitude();
                 double longi = LocationGps.getLongitude();
 
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
+
 
 //                showLocationTxt.setText(df.format(lat));
                 ceklat = df.format(lat);

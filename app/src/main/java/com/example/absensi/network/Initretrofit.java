@@ -5,24 +5,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Initretrofit {
 //    private static final String URL = "http://lagiviral.web.id/";
-private static final String URL = "http://192.168.1.37/dku-pro/public/";
+private static final String URL = "http://192.168.1.17/dku-pro/public/";
     private static final String BASE_URL_IMAGE = URL + "asset/foto_produk/";
     private static final String BASE_URL_KTP = URL + "asset/foto_ktp/";
 
-//    private static final String URL = "http://192.168.1.13";
-//    private static final String BASE_URL = URL + "/kakarentalllll/";
-//    private static final String BASE_URL_IMAGE =BASE_URL+ "asset/foto_produk/";
-//
-//    private static final String BASE_URL_KTP = BASE_URL +"asset/foto_ktp/";
-
-//    public static Retrofit initRetrofit() {
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        return retrofit;
 
 
     public static Retrofit initRetrofit() {

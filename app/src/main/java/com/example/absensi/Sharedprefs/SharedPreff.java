@@ -15,6 +15,24 @@ public class SharedPreff {
     private static String id ="id";
     private static String tipe="tipe";
     private static String email="email";
+    private static String Long="longtidue";
+    private static String latitude ="latitude";
+
+    public static void setLong(String aLong) {
+        Long = aLong;
+    }
+
+    public static void setLatitude(String latitude) {
+        SharedPreff.latitude = latitude;
+    }
+
+    public static String getLong() {
+        return Long;
+    }
+
+    public static String getLatitude() {
+        return latitude;
+    }
 
     public static String getNoHp() {
         return noHp;
