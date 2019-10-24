@@ -36,6 +36,7 @@ import com.example.absensi.model.checkin.ResponseCheckin;
 import com.example.absensi.model.checkout.Responseout;
 import com.example.absensi.model.dataUser.DataItem;
 import com.example.absensi.model.dataUser.ResponseDataUser;
+import com.example.absensi.model.ijin.ResponseIjin;
 import com.example.absensi.network.Initretrofit;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -57,16 +58,11 @@ public class HomeFragment extends Fragment implements LocationListener {
     Location location;
     String latitude, longitude;
     String ceklat, ceklong;
-    String ct, cl, clo, ck, cid, cuse;
+    String ct, cl, clo, ck, cid, cuse,idlead;
 
     String alat ;
     String blong ;
-    String alat2 ;
-    String blong2;
-    String alata ;
-    String blonga ;
-    String alat2a ;
-    String blong2a ;
+
 
     TextView tgl, name;
     String formattedDate;
@@ -92,6 +88,9 @@ public class HomeFragment extends Fragment implements LocationListener {
         final View root = inflater.inflate(R.layout.fragment_absen, container, false);
 
         cuse = Prefs.getString(SharedPreff.getId(), "");
+        idlead= Prefs.getString(SharedPreff.getIdLeader(),"");
+
+
         dataUser();
         cekgps();
 //        getLocatio();
@@ -111,13 +110,14 @@ public class HomeFragment extends Fragment implements LocationListener {
         name = root.findViewById(R.id.tv_name);
         tgl = root.findViewById(R.id.tgl);
 
+
         button();
         managerCompat = NotificationManagerCompat.from(getActivity());
 
 
         name.setText(Prefs.getString(SharedPreff.getName(), ""));
         tgl.setText(formattedDate);
-
+        ct = tgl.getText().toString();
 
         return root;
     }
@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                         .setPositiveButton("Check In", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ceklokasi();
+                                cekdatain();
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                         .setPositiveButton("Check out", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ceklokasiout();
+                                cekdataout();
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -198,6 +198,20 @@ public class HomeFragment extends Fragment implements LocationListener {
                 Toast.makeText(getActivity(), ""+t.getCause()+" "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void cekdatain(){
+        if (alat!=null&&blong!=null){
+            ceklokasi();
+        }else {
+            Toast.makeText(getActivity(), "data lokasi database kosong", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void cekdataout(){
+        if (alat!=null&&blong!=null){
+            ceklokasiout();
+        }else {
+            Toast.makeText(getActivity(), "data lokasi database kosong", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void ceklokasi() {
@@ -352,7 +366,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                 Toast.makeText(getActivity(), ss+"||"+alatplus+"||"+bb+"||"+blongplus, Toast.LENGTH_SHORT).show();
             }else {
                 cid = "4";
-                DialogFormout();
+                DialogForm();
                 Toast.makeText(getActivity(), "Anda tidak dalam jangkauan" + ss+"--"+ " " + bb+"--", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "ceklokasi: "+ceklat+"--"+ceklong+"--");
                 //sendOnChanel();
@@ -379,7 +393,7 @@ public class HomeFragment extends Fragment implements LocationListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ck = txt_ket.getText().toString();
-                post();
+                ijin();
 
                 dialog.dismiss();
             }
@@ -396,36 +410,36 @@ public class HomeFragment extends Fragment implements LocationListener {
         dialog.show();
     }
 
-    private void DialogFormout() {
-        dialog = new AlertDialog.Builder(getActivity());
-        inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.form_ijin, null);
-        dialog.setView(dialogView);
-        dialog.setCancelable(true);
-        dialog.setIcon(R.mipmap.ic_launcher);
-        dialog.setTitle("Form ijin diluar area kantor");
-        txt_ket = (EditText) dialogView.findViewById(R.id.et_keterangan);
-
-        dialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ck = txt_ket.getText().toString();
-                postout();
-                dialog.dismiss();
-            }
-        });
-
-        dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
+//    private void DialogFormout() {
+//        dialog = new AlertDialog.Builder(getActivity());
+//        inflater = getLayoutInflater();
+//        dialogView = inflater.inflate(R.layout.form_ijin, null);
+//        dialog.setView(dialogView);
+//        dialog.setCancelable(true);
+//        dialog.setIcon(R.mipmap.ic_launcher);
+//        dialog.setTitle("Form ijin diluar area kantor");
+//        txt_ket = (EditText) dialogView.findViewById(R.id.et_keterangan);
+//
+//        dialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                ck = txt_ket.getText().toString();
+//                ijin();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
     private void cekgps() {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -490,6 +504,32 @@ public class HomeFragment extends Fragment implements LocationListener {
             }
         });
     }
+    private void ijin(){
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading...", "Please wait...", false, false);
+        String acc= "0";
+        Log.d(TAG, "ijin: "+cuse+"-"+idlead+"-"+ck+"-"+ct);
+        Call<ResponseIjin> call = Initretrofit.getInstance().ijin(cuse,idlead,ck,acc,ct);
+        call.enqueue(new Callback<ResponseIjin>() {
+            @Override
+            public void onResponse(Call<ResponseIjin> call, Response<ResponseIjin> response) {
+                if (response.isSuccessful()&& response.body()!=null){
+                    Toast.makeText(getActivity(), "Sukses kirim ijin", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), "Gagal kirim", Toast.LENGTH_SHORT).show();
+                }
+                loading.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseIjin> call, Throwable t) {
+                Toast.makeText(getActivity(), "Fail connection "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                loading.dismiss();
+            }
+        });
+
+    }
+
+
 
     private void getLocation() {
         ProgressBar pd = new ProgressBar(getActivity());

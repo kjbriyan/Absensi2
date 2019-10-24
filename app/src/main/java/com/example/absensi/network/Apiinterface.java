@@ -4,6 +4,8 @@ import com.example.absensi.model.Login.ResponseLogin;
 import com.example.absensi.model.checkin.ResponseCheckin;
 import com.example.absensi.model.checkout.Responseout;
 import com.example.absensi.model.dataUser.ResponseDataUser;
+import com.example.absensi.model.dataijin.ResponseijinLead;
+import com.example.absensi.model.ijin.ResponseIjin;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,6 +28,10 @@ public interface Apiinterface {
     Call<ResponseDataUser> getDataUser(@Path("id") String iduser
     );
 
+    @GET("api/getleader/{id}")
+    Call<ResponseijinLead> getDataIjin(@Path("id") String idlead
+    );
+
     @FormUrlEncoded
     @POST("api/checkin")
     Call<ResponseCheckin> CheckIn(@Field("time_in") String time,
@@ -45,6 +51,17 @@ public interface Apiinterface {
                                @Field("keterangan") String ket,
                                @Field("id_user") String iduser
     );
+
+    @FormUrlEncoded
+    @POST("api/reason")
+    Call<ResponseIjin> ijin(@Field("id_user") String iduser,
+                            @Field("id_leader") String idled,
+                            @Field("keterangan") String ket,
+                            @Field("acc") String acc,
+                            @Field("date_created") String date
+
+    );
+
 
 
 }

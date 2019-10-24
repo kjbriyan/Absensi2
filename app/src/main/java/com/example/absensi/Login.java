@@ -153,6 +153,7 @@ public class Login extends AppCompatActivity {
         Prefs.putString(SharedPreff.getName(),data.getName());
         Prefs.putString(SharedPreff.getNoHp(),data.getNoHp());
         Prefs.putString(SharedPreff.getIdPosition(),data.getIdPosition());
+        Prefs.putString(SharedPreff.getIdLeader(),data.getIdLeader());
     }
 
 }
