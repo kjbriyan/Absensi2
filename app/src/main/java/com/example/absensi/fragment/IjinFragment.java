@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,13 +52,14 @@ public class IjinFragment extends Fragment {
         lln.setReverseLayout(true);
         rv.setLayoutManager(lln);
         rv.setHasFixedSize(true);
-        id= Prefs.getString(SharedPreff.getId(),"");
+        id= Prefs.getString(SharedPreff.getIdLeader(),"");
         getData();
 
         return v;
     }
     private void getData(){
 
+        Log.d("Au", "getData: "+id);
         Call<ResponseijinLead> call= Initretrofit.getInstance().getDataIjin(id);
         call.enqueue(new Callback<ResponseijinLead>() {
             @Override

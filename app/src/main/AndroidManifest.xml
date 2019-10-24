@@ -22,7 +22,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.RegisterActivity"></activity>
+        <activity android:name=".Leader.FormAccActivity"></activity>
+        <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Leader.LeaderActivity" />
         <activity android:name=".Activity.INActivity" />
         <activity

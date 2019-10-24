@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.absensi.Leader.FormAccActivity;
 import com.example.absensi.Leader.LeaderActivity;
 import com.example.absensi.R;
 import com.example.absensi.model.dataijin.DataItem;
@@ -46,7 +47,7 @@ public class RvLeaderAdapter extends RecyclerView.Adapter<RvLeaderAdapter.View_h
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), LeaderActivity.class);
+                Intent i = new Intent(view.getContext(), FormAccActivity.class);
                 i.putExtra("name",itemList.get(position).getName());
                 i.putExtra("ket",itemList.get(position).getKeterangan());
                 i.putExtra("idIjin",itemList.get(position).getIdReason());
