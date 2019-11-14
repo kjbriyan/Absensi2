@@ -23,10 +23,10 @@ public class RvLeaderAdapter extends RecyclerView.Adapter<RvLeaderAdapter.View_h
     Context mContext;
     List<DataItem> itemList;
     public RvLeaderAdapter(Context mContext, List<DataItem> itemList) {
-        notifyDataSetChanged();
 
         this.mContext = mContext;
         this.itemList = itemList;
+        notifyDataSetChanged();
 
     }
     @NonNull
@@ -44,14 +44,17 @@ public class RvLeaderAdapter extends RecyclerView.Adapter<RvLeaderAdapter.View_h
 
         holder.name.setText(itemList.get(position).getName());
         holder.ket.setText(itemList.get(position).getKeterangan());
+        holder.tgl.setText(itemList.get(position).getDateCreated());
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), FormAccActivity.class);
                 i.putExtra("name",itemList.get(position).getName());
                 i.putExtra("ket",itemList.get(position).getKeterangan());
-                i.putExtra("idIjin",itemList.get(position).getIdReason());
+                i.putExtra("id",itemList.get(position).getIdReason());
+                i.putExtra("tgl",itemList.get(position).getDateCreated());
                 view.getContext().startActivity(i);
+
             }
         });
 
@@ -63,12 +66,13 @@ public class RvLeaderAdapter extends RecyclerView.Adapter<RvLeaderAdapter.View_h
     }
 
     public class View_holder extends RecyclerView.ViewHolder {
-        TextView name,ket;
+        TextView name,ket,tgl;
         LinearLayout cv ;
         public View_holder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             ket= itemView.findViewById(R.id.tv_keterangan);
+            tgl= itemView.findViewById(R.id.tv_tgl);
             cv= itemView.findViewById(R.id.linearLayout);
 
         }

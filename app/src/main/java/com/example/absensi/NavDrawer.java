@@ -1,25 +1,16 @@
 package com.example.absensi;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,30 +19,24 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.absensi.Sharedprefs.SharedPreff;
 import com.example.absensi.Utils.Move;
+import com.example.absensi.network.Initretrofit;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.pixplicity.easyprefs.library.Prefs;
-
-import java.text.DecimalFormat;
+import com.squareup.picasso.Picasso;
 
 public class NavDrawer extends AppCompatActivity {
 
 
-    boolean doubleBackToExitPressedOnce = false;
     private AppBarConfiguration mAppBarConfiguration;
-    LocationManager locationManager;
-    String latitude, longitude;
-    TextView name,jabatan;
-    private static final int REQUEST_LOCATION = 1;
-    //FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
-
 
 
         // mAuth = FirebaseAuth.getInstance();
@@ -77,6 +62,15 @@ public class NavDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nameuser);
+        TextView navJabatan = headerView.findViewById(R.id.jabatanuser);
+        ImageView navIv = headerView.findViewById(R.id.imageView);
+
+        navUsername.setText(Prefs.getString(SharedPreff.getName(),""));
+        navJabatan.setText(Prefs.getString(SharedPreff.getPosition(),""));
+        Picasso.get().load(Initretrofit.getIMG_URL()+Prefs.getString(SharedPreff.getPhoto(),"")).error(R.drawable.ic_person_black_24dp).into(navIv);
     }
 
     @Override
@@ -101,6 +95,7 @@ public class NavDrawer extends AppCompatActivity {
     private void logout() {
         Prefs.clear();
         Move.move(this, Login.class);
+        finish();
     }
 
     @Override

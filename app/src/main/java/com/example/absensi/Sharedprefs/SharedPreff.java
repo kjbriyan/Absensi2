@@ -11,11 +11,12 @@ public class SharedPreff {
     private static String updatedAt="updated_at";
     private static String name="name";
     private static String idPosition="id_position";
+    private static String Position ="position";
     private static String imei="imei";
     private static String id ="id";
     private static String tipe="tipe";
     private static String email="email";
-    private static String Long="longtidue";
+    private static String Long="longitude";
     private static String latitude ="latitude";
 
     public static void setLong(String aLong) {
@@ -28,6 +29,14 @@ public class SharedPreff {
 
     public static String getLong() {
         return Long;
+    }
+
+    public static String getPosition() {
+        return Position;
+    }
+
+    public static void setPosition(String position) {
+        Position = position;
     }
 
     public static String getLatitude() {

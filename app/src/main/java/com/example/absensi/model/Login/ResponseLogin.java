@@ -15,12 +15,19 @@ public class ResponseLogin{
 	@SerializedName("status")
 	private String status;
 
+	@SerializedName("tipe")
+	private String tipe;
+
 	public Data getData(){
 		return data;
 	}
 
 	public String getMessage(){
 		return message;
+	}
+
+	public String getTipe() {
+		return tipe;
 	}
 
 	public String getStatus(){

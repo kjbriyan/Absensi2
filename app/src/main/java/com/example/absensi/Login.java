@@ -1,15 +1,10 @@
 package com.example.absensi;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -20,7 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.absensi.Activity.RegisterActivity;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.absensi.Leader.LeaderActivity;
 import com.example.absensi.Sharedprefs.SharedPreff;
 import com.example.absensi.Utils.Move;
@@ -36,8 +34,8 @@ import retrofit2.Response;
 public class Login extends AppCompatActivity {
     EditText us, pass;
     Button btn;
-    String no,imei;
-
+    String no, imei;
+TextView tv;
     ResponseLogin login;
     public static final String TAG = "Login";
 
@@ -50,14 +48,14 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         startinit();
+
+        Log.d(TAG, "onCreate: "+Prefs.getString(SharedPreff.getTipe(),""));
     }
 
     private void startinit() {
 
 
-
-
-
+        login = new ResponseLogin();
         new Prefs.Builder()
                 .setContext(this)
                 .setMode(ContextWrapper.MODE_PRIVATE)
@@ -66,24 +64,22 @@ public class Login extends AppCompatActivity {
                 .build();
 
 
-        if (Prefs.getString(SharedPreff.getIdPosition(), null) == null) {
+        if (Prefs.getString(SharedPreff.getTipe(), null) == null) {
             initUI();
             return;
-        }else if (Prefs.getString(SharedPreff.getIdPosition(),"").equals("1")){
-            Move.move(this, LeaderActivity.class);
-            finish();
-        }else if (Prefs.getString(SharedPreff.getIdPosition(),"").equals("2")){
-            Move.move(this, LeaderActivity.class);
-            finish();
-        }else{
-            Move.move(this, NavDrawer.class);
+        }  else {
+            Move.move(Login.this, NavDrawer.class);
             finish();
         }
 
     }
-    private void initUI(){
+
+    private void initUI() {
         btn = findViewById(R.id.btnmasuk);
         us = findViewById(R.id.et_usname);
+        tv=findViewById(R.id.tv_version);
+
+        tv.setText("version "+BuildConfig.VERSION_NAME);
         ActivityCompat.requestPermissions(Login.this,
                 new String[]{Manifest.permission.READ_PHONE_STATE},
                 1);
@@ -98,19 +94,19 @@ public class Login extends AppCompatActivity {
                 TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 imei = tm.getDeviceId();
                 no = us.getText().toString();
-                Log.d(TAG, "onClick:"+imei);
-                Log.d(TAG, "onClick: "+no);
+                Log.d(TAG, "onClick:" + imei);
+                Log.d(TAG, "onClick: " + no);
 
-                    checkLogin();
+                checkLogin();
 
             }
         });
     }
 
-    private void checkLogin(){
-
+    private void checkLogin() {
         final ProgressDialog loading = ProgressDialog.show(this, "Loading...", "Please wait...", false, false);
-        Call<ResponseLogin> call = Initretrofit.getInstance().getUser(no,imei);
+
+        Call<ResponseLogin> call = Initretrofit.getInstance().getUser(no, imei);
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
@@ -120,23 +116,18 @@ public class Login extends AppCompatActivity {
                 if (response.body() != null) {
                     Prefs.clear();
                     setPrefference(response.body().getData());
+                    Prefs.putString(SharedPreff.getTipe(),login.getTipe() );
                     Toast.makeText(Login.this, login.getMessage(), Toast.LENGTH_SHORT).show();
-                    if(login.getData().getIdPosition().equals("1")){
-                        Move.move(Login.this, LeaderActivity.class);
-                        finish();
-                    }else if (login.getData().getIdPosition().equals("2")){
-                        Move.move(Login.this, LeaderActivity.class);
-                        finish();
-                    }else{
                         Move.move(Login.this, NavDrawer.class);
                         finish();
-                    }
+
 
                     loading.dismiss();
 
-                }else {
+                } else {
+//                    Toast.makeText(Login.this, login.getMessage(), Toast.LENGTH_SHORT).show();
                     Toast.makeText(Login.this, "Gagal Login Mungkin Nomor hp salah atau hp anda tidak sesuai user yang anda gunakan", Toast.LENGTH_SHORT).show();
-                   loading.dismiss();
+                    loading.dismiss();
                 }
             }
 
@@ -149,11 +140,16 @@ public class Login extends AppCompatActivity {
     }
 
     private void setPrefference(Data data) {
-        Prefs.putString(SharedPreff.getId(),data.getId());
-        Prefs.putString(SharedPreff.getName(),data.getName());
-        Prefs.putString(SharedPreff.getNoHp(),data.getNoHp());
-        Prefs.putString(SharedPreff.getIdPosition(),data.getIdPosition());
-        Prefs.putString(SharedPreff.getIdLeader(),data.getIdLeader());
+        Prefs.putString(SharedPreff.getId(), data.getId());
+        Prefs.putString(SharedPreff.getName(), data.getName());
+        Prefs.putString(SharedPreff.getNoHp(), data.getNoHp());
+        Prefs.putString(SharedPreff.getIdPosition(), data.getIdPosition());
+        Prefs.putString(SharedPreff.getIdLeader(), data.getIdLeader());
+        Prefs.putString(SharedPreff.getPosition(), data.getPosition());
+        Prefs.putString(SharedPreff.getPhoto(),data.getPhoto());
+        Prefs.putString(SharedPreff.getLatitude(),data.getLatitude());
+        Prefs.putString(SharedPreff.getLong(),data.getLongtitude());
+
     }
 
 }

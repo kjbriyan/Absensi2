@@ -16,7 +16,7 @@ public class DataItem{
 	private String keterangan;
 
 	@SerializedName("id_reason")
-	private int idReason;
+	private String idReason;
 
 	@SerializedName("date_created")
 	private String dateCreated;
@@ -42,7 +42,7 @@ public class DataItem{
 		return keterangan;
 	}
 
-	public int getIdReason(){
+	public String getIdReason(){
 		return idReason;
 	}
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -52,23 +51,30 @@
                     android:text="2019"
                     android:textColor="@android:color/white" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/jam2"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:format24Hour="HH:mm:ss"-->
-<!--                    android:textColor="@android:color/white"-->
-<!--                    tools:ignore="NewApi" />-->
-
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/tv_lokasi"
+                android:layout_gravity="center"
+                android:text=" "/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
 
 
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Get Lokasi"-->
+<!--        android:background="@color/item"-->
+<!--        android:textColor="@color/colorWhite"-->
+<!--        android:id="@+id/btn_getLokasi"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
     <Button
         android:id="@+id/in"
@@ -106,4 +112,5 @@
         app:layout_constraintTop_toBottomOf="@+id/in"
         app:layout_constraintVertical_bias="0.048"
         tools:ignore="RtlCompat" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

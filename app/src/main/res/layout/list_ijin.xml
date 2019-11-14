@@ -9,12 +9,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
+        android:textColor="@android:color/white"
         android:textSize="17sp"
         android:id="@+id/tv_name"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="name"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:id="@+id/tv_tgl"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tv_keterangan"
+        android:textColor="@android:color/white"
         android:text="keterang"
         android:textSize="15sp"/>
     <View

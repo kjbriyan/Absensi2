@@ -4,105 +4,127 @@ package com.example.absensi.model.Login;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Data{
+public class Data {
 
-	@SerializedName("no_hp")
-	private String noHp;
+    @SerializedName("no_hp")
+    private String noHp;
 
-	@SerializedName("photo")
-	private String photo;
+    @SerializedName("photo")
+    private String photo;
 
-	@SerializedName("created_at")
-	private String createdAt;
+    @SerializedName("created_at")
+    private String createdAt;
 
-	@SerializedName("email_verified_at")
-	private String emailVerifiedAt;
+    @SerializedName("email_verified_at")
+    private String emailVerifiedAt;
 
-	@SerializedName("id_location")
-	private String idLocation;
+    @SerializedName("id_location")
+    private String idLocation;
 
-	@SerializedName("type")
-	private String type;
+    @SerializedName("type")
+    private String type;
 
-	@SerializedName("id_leader")
-	private String idLeader;
+    @SerializedName("id_leader")
+    private String idLeader;
 
-	@SerializedName("updated_at")
-	private String updatedAt;
+    @SerializedName("updated_at")
+    private String updatedAt;
 
-	@SerializedName("name")
-	private String name;
+    @SerializedName("name")
+    private String name;
 
-	@SerializedName("id_position")
-	private String idPosition;
+    @SerializedName("id_position")
+    private String idPosition;
 
-	@SerializedName("imei")
-	private String imei;
+    public String getPosition() {
+        return Position;
+    }
 
-	@SerializedName("id")
-	private String id;
+    @SerializedName("position")
+    private String Position;
 
-	@SerializedName("tipe")
-	private String tipe;
+    @SerializedName("imei")
+    private String imei;
 
-	@SerializedName("email")
-	private String email;
+    @SerializedName("id")
+    private String id;
 
-	public String getNoHp(){
-		return noHp;
-	}
+    @SerializedName("tipe")
+    private String tipe;
 
-	public String getPhoto(){
-		return photo;
-	}
+    @SerializedName("email")
+    private String email;
 
-	public String getCreatedAt(){
-		return createdAt;
-	}
+    @SerializedName("latitude")
+    private String latitude;
 
-	public String getEmailVerifiedAt(){
-		return emailVerifiedAt;
-	}
+    @SerializedName("longitude")
+    private String longtitude;
 
-	public String getIdLocation(){
-		return idLocation;
-	}
+    public String getLatitude() {
+        return latitude;
+    }
 
-	public String getType(){
-		return type;
-	}
+    public String getLongtitude() {
+        return longtitude;
+    }
 
-	public String getIdLeader(){
-		return idLeader;
-	}
 
-	public String getUpdatedAt(){
-		return updatedAt;
-	}
+    public String getNoHp() {
+        return noHp;
+    }
 
-	public String getName(){
-		return name;
-	}
+    public String getPhoto() {
+        return photo;
+    }
 
-	public String getIdPosition(){
-		return idPosition;
-	}
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-	public String getImei(){
-		return imei;
-	}
+    public String getEmailVerifiedAt() {
+        return emailVerifiedAt;
+    }
 
-	public String getId(){
-		return id;
-	}
+    public String getIdLocation() {
+        return idLocation;
+    }
 
-	public String getTipe(){
-		return tipe;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public String getEmail(){
-		return email;
-	}
+    public String getIdLeader() {
+        return idLeader;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIdPosition() {
+        return idPosition;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTipe() {
+        return tipe;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
 
 }

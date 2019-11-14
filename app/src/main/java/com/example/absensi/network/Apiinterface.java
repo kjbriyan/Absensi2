@@ -6,6 +6,7 @@ import com.example.absensi.model.checkout.Responseout;
 import com.example.absensi.model.dataUser.ResponseDataUser;
 import com.example.absensi.model.dataijin.ResponseijinLead;
 import com.example.absensi.model.ijin.ResponseIjin;
+import com.example.absensi.model.updatestatusijin.ResponseStatusIjin;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -22,6 +23,12 @@ public interface Apiinterface {
     Call<ResponseLogin> getUser(@Field("no_hp") String username,
                                 @Field("imei") String password
                                 );
+
+    @FormUrlEncoded
+    @POST("api/approve")
+    Call<ResponseStatusIjin> updatestatus(@Field("id_reason") String id,
+                                          @Field("acc") String acc
+    );
 
 
     @GET("api/getuser/{id}")
@@ -58,6 +65,8 @@ public interface Apiinterface {
                             @Field("id_leader") String idled,
                             @Field("keterangan") String ket,
                             @Field("acc") String acc,
+                            @Field("lat") String lat,
+                            @Field("long") String lonng,
                             @Field("date_created") String date
 
     );

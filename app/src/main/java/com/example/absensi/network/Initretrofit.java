@@ -4,9 +4,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Initretrofit {
-//    private static final String URL = "http://lagiviral.web.id/";
-private static final String URL = "http://192.168.1.17/dku-pro/public/";
-    private static final String BASE_URL_IMAGE = URL + "asset/foto_produk/";
+    private static final String URL = "http://manajemen.dmart.co.id/";
+//private static final String URL = "http://192.168.1.17/dku-pro/public/";
+    private static final String BASE_URL_IMAGE = URL + "img/profile/";
     private static final String BASE_URL_KTP = URL + "asset/foto_ktp/";
 
 

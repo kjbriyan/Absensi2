@@ -1,6 +1,7 @@
 package com.example.absensi.fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -57,8 +58,16 @@ public class IjinFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
+
     private void getData(){
 
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Get Data...", "Please wait...", false, false);
         Log.d("Au", "getData: "+id);
         Call<ResponseijinLead> call= Initretrofit.getInstance().getDataIjin(id);
         call.enqueue(new Callback<ResponseijinLead>() {
@@ -69,14 +78,18 @@ public class IjinFragment extends Fragment {
                     List<DataItem> data = res.getData();
                     adapter= new RvLeaderAdapter(getActivity(),data);
                     rv.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
                 }else {
                     Toast.makeText(getActivity(), "Fail get Data", Toast.LENGTH_SHORT).show();
                 }
+                loading.dismiss();
             }
 
             @Override
             public void onFailure(Call<ResponseijinLead> call, Throwable t) {
                 Toast.makeText(getActivity(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                loading.dismiss();
             }
         });
     }
